@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banana Speak translator</title>
+
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Petit+Formal+Script&display=swap" rel="stylesheet"> -->
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Italianno&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+
+</head>
+
+<style>
+
+    .header{
+        width: 70%;
+        /* background-color: #fbb034; */
+        background-image: linear-gradient(360deg, #fbb034 0%, #ffdd00 85%);
+        /* background: linear-gradient(180deg, #13F1FC -7.67%, #04B2F4 40.97%, #0470DC 84.81%); */
+        font-family: 'Italianno', cursive;
+        font-size: 3rem;
+        font-weight: bold;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom-left-radius: 50% ;
+        border-bottom-right-radius: 50% ;
+
+    }
+
+    img{
+        width: 15%;
+        margin-top: 3%;
+    }
+
+    .text {
+        /* font-family: 'Petit Formal Script', cursive; */
+        font-family: 'Italianno', cursive;
+        font-size: 2.5em;
+        color: linear-gradient(360deg, #fbb034 0%, #ffdd00 85%);
+        color: #ffdd00;
+        font-weight: 600;
+
+    }
+
+    .text1 {
+        font-family: 'Italianno', cursive;
+        font-size: 2rem;
+        margin-right: 30%;
+
+    }
+
+    .ip-message{
+        font-family: 'Italianno', cursive;
+        font-size: 2rem;
+        width: 40%;
+        height: auto;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;  
+        border: none; 
+        border-radius: 5px;
+        font-weight:500;
+        text-decoration:dotted;
+
+
+    }
+
+    .op-area{
+        width: 40%;
+        /* border:1px solid black ; */
+        height: 100px;
+        border-radius: 5px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; 
+        font-size: 2rem; 
+        text-align: left;
+        font-weight: 600;
+        font-family: 'Italianno', cursive; 
+        padding: 1rem;
+        margin: 1rem;
+
+    }
+
+    textarea{
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    button{
+        width: 15%;
+        border: none;
+        padding-top: 1%;
+        padding-bottom: 1%;
+        font-size: 1.8rem;
+        font-family: 'Italianno', cursive;
+        /* box-shadow: rgba(246, 255, 0, 0.2) 0px 7px 29px 0px;   */
+        box-shadow:  #ffdd00  0px 10px 20px -5px;  
+        background: linear-gradient(360deg, #fbb034 0%, #ffdd00 85%);
+        border-radius: 2px;
+
+    }
+
+    .footer{
+        width: inherit;
+        background: linear-gradient(360deg, #fbb034 0%, #ffdd00 85%);
+        padding: 2rem;
+        font-family: 'Italianno', cursive;
+        border-top-left-radius: 50% ;
+        border-top-right-radius: 50% ;
+    }
+
+</style>
+
+
+
+<body>
+
+    <center>
+
+        <div class="header">
+            Talk Banana
+        </div>
+
+        <div class="img"><img src="./pngegg (9).png" alt="wrerw"></div>
+        <br>
+        <div class="text">Minnion Banana Translator</div>
+        
+        <textarea name="textarea" class="ip-message"  placeholder="Enter your sentense in English here "></textarea>
+        <br>
+        <br>
+        <button class="btn-translate">Translate to Banana</button>
+        <br>
+        <br>
+        <div class="text1">Output ↓</div>
+        <div class="op-area"></div>
+
+        <div class="footer">
+            <span style="font-size: 3rem;">about banana</span> <br>
+            <span style="font-size: 2rem;">This language is spoken by the minions in Despicable Me.</span>
+
+        </div>
+
+
+    </center>
+
+
+
+<script>
+
+    const input = document.querySelector(".ip-message");
+    const output = document.querySelector(".op-area");
+    const button = document.querySelector(".btn-translate");
+
+    var serverURL = "https://api.funtranslations.com/translate/minion.json";
+    // var serverURL = "https://api.funtranslations.com/translate/ferb-latin.json";
+
+    function getTranslationURL(text)
+    {
+        return serverURL + "?" + "text=" + text
+    }
+
+    function errorHandler(error)
+    {
+        console.log("error occured", error);
+        alert("something wrong with server! try again after some time ")
+    }
+
+
+    function clickHandler()
+    {
+        var inputText = input.value;
+
+        fetch(getTranslationURL(inputText))
+            .then(response =>response.json())
+            .then(json => {
+                var translatedText = json.contents.translated;
+                output.innerHTML = translatedText;
+            })
+            .catch(errorHandler)
+        
+        
+        
+        // console.log("click")
+        // console.log(input.value)
+        // output.innerHTML=input.value;
+        
+    };
+
+    button.addEventListener("click", clickHandler);
+
+</script>    
+
+</body>
+</html>
